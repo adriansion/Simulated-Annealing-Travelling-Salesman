@@ -6,13 +6,13 @@ This program, given a user-limited number of iterations, will use Simulated Anne
 
 To do:
 
-Write file-reader (for node coordinate configurations)
+- Write file-reader (for node coordinate configurations)
 
-Write cartographer sub-program, which calculates the distance between all nodes in graph configuration from given adjacency matrix
+- Write cartographer sub-program, which calculates the distance between all nodes in graph configuration from given adjacency matrix
 
-Implement primary Simulated Annealing algorithm in C
+- Implement primary Simulated Annealing algorithm in C
 
-Explore workarounds for Java data structure usage
-
-this could mean writing more in-built implementations such as included queue data structure
+- Explore workarounds for Java data structure usage
+    - this could mean writing more in-built implementations such as included queue data structure
+    
 Explore visualization of graph configuration (JFrame used in Java version)
