@@ -6,8 +6,6 @@ This program, given a user-limited number of iterations, will use Simulated Anne
 
 To do:
 
-- Write cartographer sub-program, which calculates the distance between all nodes in graph configuration from given adjacency matrix
-
 - Implement primary Simulated Annealing algorithm in C
 
 - Explore workarounds for Java data structure usage

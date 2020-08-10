@@ -3,6 +3,7 @@
 #include <time.h>
 #include "matrix.h"
 #include "readfile.h"
+#include "distances.h"
 
 void printMatrixContents(int, const int *);
 
@@ -17,14 +18,20 @@ int main() {
 //    printMatrixContents(nodeCount, matrix);
 //    free(matrix);
 
-    nodeData *data = readfile("nodeConfig.txt");
 
-    for (int i = 0; i < data->nodeCount; i++) {
-        printf("%d %d\n", data->nodes[i].xCoordinate, data->nodes[i].yCoordinate);
-    }
 
-    free(data->nodes);
-    free(data);
+//    nodeData *data = readfile("nodeConfig.txt");
+//
+//    for (int i = 0; i < data->nodeCount; i++) {
+//        printf("%d %d\n", data->nodes[i].xCoordinate, data->nodes[i].yCoordinate);
+//    }
+//
+//    free(data->nodes);
+//    free(data);
+
+
+    printf("%f\n", mapDistances(readfile("nodeConfig.txt")));
+
     return 0;
 }
 

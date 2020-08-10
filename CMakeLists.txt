@@ -3,4 +3,4 @@ project(Simulated_Annealing C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Simulated_Annealing main.c queue.h queue.c matrix.c matrix.h readfile.c readfile.h)
+add_executable(Simulated_Annealing main.c queue.h queue.c matrix.c matrix.h readfile.c readfile.h distances.c distances.h)
