@@ -6,7 +6,6 @@
 int *generateMatrix(int nodeCount) {
     int *matrix = attemptGeneration(nodeCount);
     while (matrix == NULL) {
-        free(matrix);
         matrix = attemptGeneration(nodeCount);
     }
     return matrix;
@@ -54,6 +53,7 @@ int *attemptGeneration(int nodeCount) {
             recycleCounter++;
             if (recycleCounter >= spotQueue->size) {
                 queue_free(spotQueue);
+                free(matrix);
                 return NULL;
             } else {
                 queue_add(spotQueue, queue_poll(spotQueue));

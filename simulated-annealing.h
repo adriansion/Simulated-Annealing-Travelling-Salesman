@@ -4,7 +4,7 @@
 #include "readfile.h"
 #include "distances.h"
 
-int *optimize(char filename[], int);
+int *optimize(char *filename, int iterations);
 
 void decreaseTemperature(void);
 

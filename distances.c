@@ -16,35 +16,16 @@ double mapDistances(file_node_data *data) {
     double distance = 0;
     int *matrix = generateMatrix(data->file_node_count);
     int limit = data->file_node_count;
-    int newMatrix[limit][limit];
 
-    for (int i = 0; i < limit; i++) {
-        for (int j = 0; j < limit; j++) {
-            newMatrix[i][j] = matrix[(limit * i) + j];
-        }
-    }
-    free(matrix);
+//    printMatrixContents(data->nodeCount, matrix);
 
-    for (int i = 0; i < limit; i++) {
-        for (int j = 0; j < limit; j++) {
-            if (newMatrix[i][j] != 0) {
+    for (int i = 0; i < data->file_node_count; i++) {
+        for (int j = 0; j < data->file_node_count; j++) {
+            if (matrix[(data->file_node_count * i) + j] != 0) {
                 distance += findDistance(&data->file_nodes[i], &data->file_nodes[j]);
             }
         }
     }
-    free(newMatrix);
-
-//    printMatrixContents(data->nodeCount, matrix);
-
-//    for (int i = 0; i < data->file_node_count; i++) {
-//        for (int j = 0; j < data->file_node_count; j++) {
-//            if (matrix[(data->file_node_count * i) + j] != 0) {
-//                distance += findDistance(&data->file_nodes[i], &data->file_nodes[j]);
-//            }
-//        }
-//    }
-//    free(matrix);
-    free(data->file_nodes);
-    free(data);
+    free(matrix);
     return distance;
 }

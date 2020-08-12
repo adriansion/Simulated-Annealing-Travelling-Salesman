@@ -7,7 +7,7 @@
 const double TEMPERATURE_MAX = 500;
 double temperature = TEMPERATURE_MAX;
 
-int *optimize(char filename[], int iterations) {
+int *optimize(char *filename, int iterations) {
     // Seeding random function.
     srand(time(NULL));
 
@@ -22,7 +22,6 @@ int *optimize(char filename[], int iterations) {
         while (temperature > 0) {
 
             for (int i = 0; i < iterations / TEMPERATURE_MAX; i++) {
-                file_node_data *data = readfile(filename);
 
                 newState = mapDistances(data);
 
@@ -44,7 +43,7 @@ int *optimize(char filename[], int iterations) {
         }
         free(data->file_nodes);
         free(data);
-        printf("%f", bestState);
+        printf("%f\n", bestState);
         return currentOptimum;
     }
 }
