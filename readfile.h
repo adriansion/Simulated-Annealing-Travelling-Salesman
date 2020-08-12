@@ -4,13 +4,13 @@
 typedef struct {
     int xCoordinate;
     int yCoordinate;
-} node;
+} file_node;
 
 typedef struct {
-    int nodeCount;
-    node *nodes;
-} nodeData;
+    int file_node_count;
+    file_node *file_nodes;
+} file_node_data;
 
-nodeData *readfile(char filename[]);
+file_node_data *readfile(char filename[]);
 
 #endif //SIMULATED_ANNEALING_READFILE_H

@@ -6,9 +6,5 @@ This program, given a user-limited number of iterations, will use Simulated Anne
 
 To do:
 
-- Implement primary Simulated Annealing algorithm in C
-
-- Explore workarounds for Java data structure usage
-    - this could mean writing more in-built implementations such as included queue data structure
-    
+- Fix memory leak found in Valgrind
 - Explore visualization of graph configuration (JFrame used in Java version)

@@ -2,10 +2,11 @@
 #define SIMULATED_ANNEALING_DISTANCES_H
 
 #include "readfile.h"
+#include "matrix.h"
 
-double findDistance(node *nodeA, node *nodeB);
+double findDistance(file_node *nodeA, file_node *nodeB);
 
-double mapDistances(nodeData *data);
+double mapDistances(file_node_data *data);
 
 
-#endif //SIMULATED_ANNEALING_DISTANCES_H
+#endif

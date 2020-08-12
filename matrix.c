@@ -1,5 +1,5 @@
+#include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
 #include "matrix.h"
 
 // Retrieves valid adjacency matrix from attemptGeneration, which sometimes returns NULL.
@@ -65,4 +65,14 @@ int *attemptGeneration(int nodeCount) {
     }
     queue_free(spotQueue);
     return matrix;
+}
+
+// Prints matrix contents to standard output.
+void printMatrixContents(int nodeCount, const int *matrix) {
+    for (int i = 0; i < nodeCount; i++) {
+        for (int j = 0; j < nodeCount; j++) {
+            printf("%d ", *(matrix + ((i * nodeCount) + j)));
+        }
+        printf("\n");
+    }
 }

@@ -8,7 +8,7 @@
 Queue queue_ini(int capacity) {
     Queue queue;
     queue = (Queue) malloc(sizeof(queue_struct));
-    queue->nodes = (node) malloc((capacity) * sizeof(int));
+    queue->queue_nodes = (int *) malloc((capacity) * sizeof(int));
     queue->capacity = capacity;
     queue->size = 0;
     return queue;
@@ -16,7 +16,7 @@ Queue queue_ini(int capacity) {
 
 // Clears dynamic memory allocated to Queue.
 void queue_free(Queue queue) {
-    free(queue->nodes);
+    free(queue->queue_nodes);
     free(queue);
 }
 
@@ -25,7 +25,7 @@ void queue_add(Queue queue, int value) {
     if (queue->capacity == queue->size) { // Queue is full.
         return;
     } else {
-        queue->nodes[queue->size] = value;
+        queue->queue_nodes[queue->size] = value;
         queue->size++;
     }
 }
@@ -35,7 +35,7 @@ int queue_peek(Queue queue) {
     if (queue->size == 0) { // Queue is empty.
         return -1;
     } else {
-        return queue->nodes[0];
+        return queue->queue_nodes[0];
     }
 }
 
@@ -44,9 +44,9 @@ int queue_poll(Queue queue) {
     if (queue->size == 0) { // Queue is empty.
         return -1;
     } else {
-        int retValue = queue->nodes[0];
+        int retValue = queue->queue_nodes[0];
         for (int i = 0; i < queue->size - 1; i++) {
-            queue->nodes[i] = queue->nodes[i + 1];
+            queue->queue_nodes[i] = queue->queue_nodes[i + 1];
         }
         queue->size--;
         return retValue;

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "readfile.h"
 
-nodeData *readfile(char filename[]) {
+file_node_data *readfile(char filename[]) {
 
     // First read is dedicated to finding the number of configured nodes.
     FILE *file = fopen(filename, "r");
@@ -25,12 +25,12 @@ nodeData *readfile(char filename[]) {
         fclose(file);
 
         // Remember to free the node data.
-        nodeData *data_ptr = (nodeData *) malloc(sizeof(nodeData));
-        data_ptr->nodes = (node *) malloc(sizeof(int) + (lineCount * sizeof(node)));
+        file_node_data *data_ptr = (file_node_data *) malloc(sizeof(file_node_data));
+        data_ptr->file_nodes = (file_node *) malloc(sizeof(int) + (lineCount * sizeof(file_node)));
 
 
         // Keeping track of number of nodes read from file.
-        data_ptr->nodeCount = lineCount;
+        data_ptr->file_node_count = lineCount;
 
         // Second read is dedicated to copying configured node nodes.
         file = fopen(filename, "r");
@@ -38,9 +38,9 @@ nodeData *readfile(char filename[]) {
         // Writing node nodes to node data struct.
         for (int i = 0; !feof(file); i++) {
             if (i % 2 == 0) {
-                fscanf(file, "%d", &(data_ptr->nodes[i / 2].xCoordinate));
+                fscanf(file, "%d", &(data_ptr->file_nodes[i / 2].xCoordinate));
             } else {
-                fscanf(file, "%d", &(data_ptr->nodes[(i - 1) / 2].yCoordinate));
+                fscanf(file, "%d", &(data_ptr->file_nodes[(i - 1) / 2].yCoordinate));
             }
         }
         fclose(file);
