@@ -6,5 +6,5 @@ This program, given a user-limited number of iterations, will use Simulated Anne
 
 To do:
 
-- Fix memory leak found in Valgrind
+- Optimize processing performance
 - Explore visualization of graph configuration (JFrame used in Java version)
