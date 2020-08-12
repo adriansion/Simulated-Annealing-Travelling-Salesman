@@ -4,75 +4,92 @@
 
 // Retrieves valid adjacency matrix from attemptGeneration, which sometimes returns NULL.
 int *generateMatrix(int nodeCount) {
+
     int *matrix = attemptGeneration(nodeCount);
+
     while (matrix == NULL) {
+
         matrix = attemptGeneration(nodeCount);
+
     }
+
     return matrix;
 
 }
+
 
 // Attempts to create a valid adjacency matrix; will return NULL if too many queue recycles occur.
 int *attemptGeneration(int nodeCount) {
+
     int *matrix = (int *) malloc(nodeCount * nodeCount * sizeof(int));
+
     for (int i = 0; i < nodeCount; i++) {
         for (int j = 0; j < nodeCount; j++) {
+
             matrix[(nodeCount * i) + j] = 0;
+
         }
     }
 
-    // Initialize spotQueue
-    int unfilledRows = nodeCount, selectedRow;
-    int queueContents_PreRandom[nodeCount];
 
+    // Initializing spotQueue.
+    int unfilledRows = nodeCount, selectedRow;
+    int queueContents[nodeCount];
     Queue spotQueue = queue_ini(nodeCount);
 
+
+    // Populating spotQueue.
     for (int i = 0; i < nodeCount; i++) {
-        queueContents_PreRandom[i] = i;
+
+        queueContents[i] = i;
+
     }
 
+
     for (int i = 0; i < nodeCount; i++) {
+
         selectedRow = rand() % unfilledRows;
 
-        queue_add(spotQueue, queueContents_PreRandom[selectedRow]);
+        queue_add(spotQueue, queueContents[selectedRow]);
 
-        // Replace array value to simulate array shrinkage
-        queueContents_PreRandom[selectedRow] = queueContents_PreRandom[unfilledRows - 1];
+        // Replacing array value to simulate array shrinkage.
+        queueContents[selectedRow] = queueContents[unfilledRows - 1];
         unfilledRows--;
+
     }
 
 
-    // Iterate through matrix columns and apply row values
-    int recycleCounter;
+    // Iterating through matrix columns and applying their row values.
+    int recycles;
 
     for (int i = 0; i < nodeCount; i++) {
-        recycleCounter = 0;
 
-        // Recycling value if necessary
+        recycles = 0;
+
+        // Recycling value if necessary.
         while (queue_peek(spotQueue) == i || matrix[(nodeCount * queue_peek(spotQueue)) + i] != 0) {
-            recycleCounter++;
-            if (recycleCounter >= spotQueue->size) {
+
+            recycles++;
+
+            if (recycles >= spotQueue->size) {
+
                 queue_free(spotQueue);
                 free(matrix);
                 return NULL;
+
             } else {
+
                 queue_add(spotQueue, queue_poll(spotQueue));
+
             }
         }
-        // Setting edge in adjacency matrix
+
+        // Setting edge in adjacency matrix.
         matrix[(nodeCount * i) + queue_poll(spotQueue)] = 1;
 
     }
+
     queue_free(spotQueue);
     return matrix;
-}
 
-// Prints matrix contents to standard output.
-void printMatrixContents(int nodeCount, const int *matrix) {
-    for (int i = 0; i < nodeCount; i++) {
-        for (int j = 0; j < nodeCount; j++) {
-            printf("%d ", *(matrix + ((i * nodeCount) + j)));
-        }
-        printf("\n");
-    }
 }

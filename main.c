@@ -4,11 +4,13 @@
 int main() {
 
     char filename[] = "nodeConfig.txt";
-    const int iterations = 10;
+    const int iterations = 5000;
 
-    optimize(filename, iterations);
+    double state = optimize(filename, iterations);
 
-//    printf("%f\n", mapDistances(readfile(filename)));
+    if (state != -1) {
+        printf("Found best state %.2f in %d iterations.\n", state, iterations);
+    }
 
     return 0;
 }

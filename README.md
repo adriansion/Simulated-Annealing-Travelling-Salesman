@@ -1,10 +1,13 @@
 **Travelling Salesman Optimizer**
 
-Originally written in Java but I am rewriting this project in C to improve my C skills and to hopefully improve efficiency.
+Written in C, this program uses simulated annealing to approach optimization of the travelling salesman problem.
 
-This program, given a user-limited number of iterations, will use Simulated Annealing to approach a solution to the Travelling Salesman problem.
+It runs for a specified number of iterations, and reads 2D coordinate data from a specified text file.
+
+Currently memory leak-free! (Memcheck tested in Valgrind on UNIX)
 
 To do:
 
+- Implement cryptographically secure random integer generation
 - Optimize processing performance
-- Explore visualization of graph configuration (JFrame used in Java version)
+- Explore visualization of graph configuration
