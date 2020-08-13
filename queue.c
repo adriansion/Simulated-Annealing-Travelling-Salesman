@@ -1,15 +1,14 @@
 #include <stdlib.h>
 #include "queue.h"
 
-// In-built implementation of the Queue data structure.
-// Peek and Poll return -1 when empty.
+// In-built implementation of the queue data structure.
+// Peek and Poll return -1 when queue is empty.
 
 
 // Dynamically allocates memory for Queue.
 Queue queue_ini(int capacity) {
 
     Queue queue        = (Queue) malloc(sizeof(queue_struct));
-
     queue->queue_nodes = (int *) malloc((capacity) * sizeof(int));
     queue->capacity    = capacity;
     queue->size        = 0;
@@ -19,7 +18,7 @@ Queue queue_ini(int capacity) {
 }
 
 
-// Clears dynamic memory allocated to Queue.
+// Clears dynamic memory allocated to queue.
 void queue_free(Queue queue) {
 
     free(queue->queue_nodes);
@@ -28,7 +27,7 @@ void queue_free(Queue queue) {
 }
 
 
-// Inserts specified value to tail of Queue.
+// Inserts specified value to tail of queue.
 void queue_add(Queue queue, int value) {
 
     if (queue->capacity == queue->size) {
@@ -44,7 +43,7 @@ void queue_add(Queue queue, int value) {
 }
 
 
-// Returns value of Queue's top node.
+// Returns value of queue's top node.
 int queue_peek(Queue queue) {
 
     if (queue->size == 0) {
@@ -59,7 +58,7 @@ int queue_peek(Queue queue) {
 }
 
 
-// Returns value of Queue's top node while removing that node from the Queue.
+// Returns value of queue's top node while removing that node from the queue.
 int queue_poll(Queue queue) {
 
     if (queue->size == 0) {

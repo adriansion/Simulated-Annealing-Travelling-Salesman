@@ -4,7 +4,7 @@
 int main() {
 
     char filename[] = "nodeConfig.txt";
-    const int iterations = 5000;
+    const int iterations = 750000;
 
     double state = optimize(filename, iterations);
 

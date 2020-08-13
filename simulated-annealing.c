@@ -18,7 +18,7 @@ double optimize(char *filename, int iterations) {
 
         int *currentOptimum = NULL;
         double currentState = -1;
-        double bestState = -1;
+        double bestState    = -1;
         double newState;
 
 
