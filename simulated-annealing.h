@@ -2,7 +2,8 @@
 #define SIMULATED_ANNEALING_SIMULATED_ANNEALING_H
 
 #include "readfile.h"
-#include "distances.h"
+#include "matrix.h"
+//#include "distances.h"
 
 double optimize(char *filename, int iterations);
 
