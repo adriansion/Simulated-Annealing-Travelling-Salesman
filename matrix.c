@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "matrix.h"
+#include <stdio.h>
 
 // Finds the distance of the straight line drawn between two specified nodes.
 double findDistance(file_node *nodeA, file_node *nodeB) {
@@ -9,19 +10,15 @@ double findDistance(file_node *nodeA, file_node *nodeB) {
     int yComponent = abs(nodeA->yCoordinate - nodeB->yCoordinate);
 
     return sqrt(pow(xComponent, 2) + pow(yComponent, 2));
-
 }
 
 
 // Calculates the cumulative distance between all of specified matrix's nodes.
-double mapDistances(file_node_data *data) {
+state_matrix *mapDistances(file_node_data *data) {
 
-    state_matrix pair = (state_matrix) malloc(sizeof(state_matrix_pair));
+    state_matrix *pair = (state_matrix *) malloc(sizeof(state_matrix));
     pair->matrix = generateMatrix(data->file_node_count);
     pair->state = 0;
-
-//    double distance = 0;
-//    int *matrix = generateMatrix(data->file_node_count);
 
     for (int i = 0; i < data->file_node_count; i++) {
         for (int j = 0; j < data->file_node_count; j++) {
@@ -33,12 +30,7 @@ double mapDistances(file_node_data *data) {
             }
         }
     }
-
-    double state = pair->state;
-    free(pair->matrix);
-    free(pair);
-    return state;
-
+    return pair;
 }
 
 
@@ -52,9 +44,7 @@ int *generateMatrix(int nodeCount) {
         matrix = attemptGeneration(nodeCount);
 
     }
-
     return matrix;
-
 }
 
 
@@ -131,5 +121,13 @@ int *attemptGeneration(int nodeCount) {
 
     queue_free(spotQueue);
     return matrix;
+}
 
+void printMatrixContents(int size, const int *matrix) {
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            printf("%d ", matrix[(size * i) + j]);
+        }
+        printf("\n");
+    }
 }

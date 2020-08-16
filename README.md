@@ -11,9 +11,9 @@ Currently memory leak-free! (Memcheck tested in Valgrind on UNIX)
 
 1. The program (readfile.c) retrieves a simple list of 2D coordinate pairs (x y), which are read from the filename specified in main.c.
 
-2. Knowing the number of coordinate pairs, the program (matrix.c) randomly generates an adjacency matrix representing a graph in which every node is visited once, and that is an appropriate size the number of nodes.
+2. Knowing the number of coordinate pairs, the program (matrix.c) randomly generates an adjacency matrix representing a graph in which every node is visited once, and that is an appropriate size for the number of nodes.
 
-3. Next, the adjacency matrix is used to determine which nodes from the file data will be adjacent (distances.c) and the pythagorean distances between all the pairs of connecting nodes are calculated and summed.
+3. Next, the adjacency matrix is used to determine which nodes from the file data will be adjacent and the pythagorean distances between all the pairs of connecting nodes are calculated and summed.
 
 4. The total graph distance is returned to the main optimization algorithm (simulated-annealing.c), and its scalar value is used as a state to be compared with many other states generated the same way.
 

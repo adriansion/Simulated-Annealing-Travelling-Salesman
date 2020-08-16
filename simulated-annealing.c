@@ -3,69 +3,97 @@
 #include <math.h>
 #include "simulated-annealing.h"
 
-const double T_MAX = 500;
-double temperature = T_MAX;
-
-double optimize(char *filename, int iterations) {
+state_matrix *optimize(char *filename, int iterations) {
 
     // Seeding random function.
     srand(time(NULL));
 
     // Retrieving 2D coordinate data from specified filename.
-    file_node_data *data = readfile(filename);
+    file_node_data *data         = readfile(filename);
+    if (data == NULL) return       NULL;
 
-    if (data != NULL) {
+    state_matrix *new_pair       = NULL;
+    state_matrix *current_pair   = NULL;
+    state_matrix *best_pair      = NULL;
 
-        int *currentOptimum = NULL;
-        double currentState = -1;
-        double bestState    = -1;
-        double newState;
+    const double temp_MAX        = 500;
+    double temperature           = temp_MAX;
 
 
-        while (temperature > 0) {
+    while (temperature > 0) {
+        for (int i = 0; i < iterations / temp_MAX; i++) {
 
-            for (int i = 0; i < (iterations / T_MAX); i++) {
+            new_pair = mapDistances(data);
 
-                newState = mapDistances(data);
+            if (current_pair == NULL) {
+                current_pair = new_pair;
 
-                if (currentState > newState || currentState == -1) {
+            } else if (current_pair->state > new_pair->state) {
 
-                    currentState = newState;
+                if (best_pair != current_pair) {
+
+                    free(current_pair->matrix);
+                    free(current_pair);
 
                 } else {
 
-                    // Generating stochastic probability to enter higher state.
-                    double higherStateProbability = exp(((newState - currentState) * -1) / temperature);
+                    free(best_pair->matrix);
+                    free(best_pair);
 
-                    if ((rand() % 1000) <= (int) (1000 * higherStateProbability) - 1) {
+                    best_pair = new_pair;
+                }
+                current_pair = new_pair;
 
-                        currentState = newState;
+            } else {
+
+                // Generating stochastic probability to enter higher state.
+                double jumpProbability = exp(((new_pair->state - current_pair->state) * -1) / temperature);
+
+                if ((rand() % 1000) <= (int) (1000 * jumpProbability) - 1) {
+
+                    if (best_pair != current_pair) {
+
+                        free(current_pair->matrix);
+                        free(current_pair);
 
                     }
-                }
+                    current_pair = new_pair;
 
-                if (bestState > currentState || bestState == -1) {
+                } else {
 
-                    bestState = currentState;
+                    free(new_pair->matrix);
+                    free(new_pair);
 
                 }
             }
+            if (best_pair == NULL) {
+                best_pair = current_pair;
 
-            decreaseTemperature();
+            } else if (best_pair->state > current_pair->state) {
+
+                free(best_pair->matrix);
+                free(best_pair);
+
+                best_pair = current_pair;
+            }
         }
+        temperature = decreaseTemperature(temperature);
+    }
 
-        free(data->file_nodes);
-        free(data);
-        return bestState;
+    free(data->file_nodes);
+    free(data);
+
+    if (best_pair != current_pair && current_pair != NULL) {
+
+        free(current_pair->matrix);
+        free(current_pair);
 
     }
-    return -1;
+
+    return best_pair;
 }
 
-
 // Decreases global temperature according to linear cooling schedule; could use a geometric schedule.
-void decreaseTemperature(void) {
-
-    temperature--;
-
+double decreaseTemperature(double t) {
+    return --t;
 }

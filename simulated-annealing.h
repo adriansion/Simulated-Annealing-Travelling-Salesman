@@ -3,10 +3,9 @@
 
 #include "readfile.h"
 #include "matrix.h"
-//#include "distances.h"
 
-double optimize(char *filename, int iterations);
+state_matrix *optimize(char *filename, int iterations);
 
-void decreaseTemperature(void);
+double decreaseTemperature(double);
 
 #endif

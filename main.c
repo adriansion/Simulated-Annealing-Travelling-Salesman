@@ -5,23 +5,15 @@
 int main() {
 
     char filename[] = "nodeConfig.txt";
-    const int iterations = 1;
+    const int iterations = 10000;
 
-    double state = optimize(filename, iterations);
+    state_matrix *pair = optimize(filename, iterations);
 
-    if (state != -1) {
-        printf("Found best state %.2f in %d iterations.\n", state, iterations);
+    if (pair != NULL) {
+        printf("Found best state %.2f in %d iterations.\n", pair->state, iterations);
+        free(pair->matrix);
+        free(pair);
     }
-
-//    file_node_data *data = readfile(filename);
-//    state_matrix pair = mapDistances(data);
-//
-//
-//    free(data->file_nodes);
-//    free(data);
-//
-//    free(pair->matrix);
-//    free(pair);
 
     return 0;
 }
