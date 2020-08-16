@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "simulated-annealing.h"
 #include <stdlib.h>
+#include "simulated-annealing.h"
+
 
 int main() {
 

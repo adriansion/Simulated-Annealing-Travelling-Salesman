@@ -25,69 +25,74 @@ state_matrix *optimize(char *filename, int iterations) {
 
             new_pair = mapDistances(data);
 
-            if (current_pair == NULL) {
-                current_pair = new_pair;
+             // First iteration.
+            if (current_pair == NULL) current_pair = new_pair;
 
-            } else if (current_pair->state > new_pair->state) {
+            // New pair's state is better than that of current pair.
+            else if (current_pair->state > new_pair->state) {
 
-                if (best_pair != current_pair) {
-
-                    free(current_pair->matrix);
-                    free(current_pair);
-
-                } else {
-
-                    free(best_pair->matrix);
-                    free(best_pair);
-
+                // Best pair and current pair point to the same matrix-state pair.
+                if (best_pair == current_pair) {
                     best_pair = new_pair;
                 }
+
+                free(current_pair->matrix); free(current_pair);
+
                 current_pair = new_pair;
+            }
 
-            } else {
+            // New pair's state is equal to or worse than that of current pair.
+            else {
 
-                // Generating stochastic probability to enter higher state.
+                // Generating stochastic probability to use new pair anyway.
                 double jumpProbability = exp(((new_pair->state - current_pair->state) * -1) / temperature);
 
+                // Probability accepted.
                 if ((rand() % 1000) <= (int) (1000 * jumpProbability) - 1) {
 
+                    // Current pair can be disregarded in exchange for new pair.
                     if (best_pair != current_pair) {
-
                         free(current_pair->matrix);
                         free(current_pair);
-
                     }
+
                     current_pair = new_pair;
+                }
 
-                } else {
-
+                // Probability denied. New pair can be disregarded.
+                else {
                     free(new_pair->matrix);
                     free(new_pair);
-
                 }
             }
-            if (best_pair == NULL) {
-                best_pair = current_pair;
 
-            } else if (best_pair->state > current_pair->state) {
+            // First iteration.
+            if (best_pair == NULL) best_pair = current_pair;
 
+            // Current pair's state is better than that of best pair.
+            else if (best_pair->state > current_pair->state) {
+
+                // Disregard best pair.
                 free(best_pair->matrix);
                 free(best_pair);
 
                 best_pair = current_pair;
             }
         }
+
+        // Update temperature according to cooling schedule.
         temperature = decreaseTemperature(temperature);
     }
 
-    free(data->file_nodes);
-    free(data);
+    // Node data is no longer needed.
+    free(data->file_nodes); free(data);
 
+    // Best pair and current pair do not point to the same state-matrix pair.
     if (best_pair != current_pair && current_pair != NULL) {
 
+        // Disregard current pair.
         free(current_pair->matrix);
         free(current_pair);
-
     }
 
     return best_pair;
